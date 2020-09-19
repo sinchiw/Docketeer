@@ -4,12 +4,14 @@ import * as actions from "../../actions/actions";
 import * as helper from "../helper/commands";
 import ModalDisplay from "../display/ModalDisplay";
 import NetworkChildrenList from "./NetworkChildrenList";
+import Spinner from "../display/Spinner";
 
 const Yml = () => {
   // cant read add eventlistner of null
 
   const [filepath, setFilepath] = useState("");
   const [fileList, setfileList] = useState("");
+
   const [modalValid, setModalValid] = useState(false);
   const [modalErrormessage, setModalErrormessage] = useState("");
 
@@ -77,10 +79,14 @@ const Yml = () => {
    *       ]
    * }]
    */
-  const NetworkDisplay = () => {
+  const NetworkDisplay = (props) => {
+    console.log("this is the network", networkList);
+    const [load, setload] = useState(false);
     if (networkList.length) {
+      console.log("this is the network", networkList);
+      setload(true);
       let newArray = [];
-
+      console.log("hey im here");
       //First iteration of network List
       for (let i = 0; i < networkList.length; i++) {
         let keys = Object.keys(networkList[i]); // save keys in this format ["parentName"]
@@ -100,8 +106,14 @@ const Yml = () => {
 
       return <div>{newArray}</div>;
     } else {
-      return <></>;
+      // return <></>;
+      return (
+        <div>
+          <p> sorry the list is empty</p>
+        </div>
+      );
     }
+    // return <Spinner />;
   };
 
   return (
@@ -149,9 +161,11 @@ const Yml = () => {
         modalErrormessage
         modalErrormessage={modalErrormessage}
       />
+
       <div className="containers">
         <NetworkDisplay />
       </div>
+      {/* <Spinner /> */}
     </div>
   );
 };
