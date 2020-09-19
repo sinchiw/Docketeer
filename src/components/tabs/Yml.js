@@ -61,6 +61,9 @@ const Yml = () => {
     };
   }, []);
 
+  useEffect(() => {
+    //helper.displayNetwork();
+  }, []);
   /**
    * networkList is array from the redux store
    * Only display relationship of containers when networkList's length is more than 1
@@ -79,20 +82,18 @@ const Yml = () => {
    *       ]
    * }]
    */
-  const NetworkDisplay = (props) => {
-    console.log("this is the network", networkList);
-    const [load, setload] = useState(false);
+  const NetworkDisplay = () => {
     if (networkList.length) {
       console.log("this is the network", networkList);
       setload(true);
       let newArray = [];
-      console.log("hey im here");
       //First iteration of network List
+      console.log("I am ehre");
       for (let i = 0; i < networkList.length; i++) {
         let keys = Object.keys(networkList[i]); // save keys in this format ["parentName"]
         let parent = keys[0];
         newArray.push(
-          <div className="yml-boxes" key={`yml-boxes${i}`}>
+          <div className="yml-boxes box-shadow" key={`yml-boxes${i}`}>
             <div className="yml-labels" key={`yml-labels${i}`}>
               <p>Network: {parent}</p>
             </div>
@@ -124,7 +125,7 @@ const Yml = () => {
       </div>
       <div className="drag-container">
         <div className="drag-container-box box-shadow" id="drag-file">
-          Drag and drop your Docker Compose file here to run it.
+          Drag and drop or upload your Docker Compose file here to run it.
           <p>
             <i className="fas fa-file yml-icon"></i>
           </p>
@@ -161,11 +162,9 @@ const Yml = () => {
         modalErrormessage
         modalErrormessage={modalErrormessage}
       />
-
       <div className="containers">
         <NetworkDisplay />
       </div>
-      {/* <Spinner /> */}
     </div>
   );
 };
