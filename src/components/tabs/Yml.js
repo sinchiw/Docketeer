@@ -6,7 +6,7 @@ import ModalDisplay from "../display/ModalDisplay";
 import NetworkChildrenList from "./NetworkChildrenList";
 import Spinner from "../display/Spinner";
 
-const Yml = () => {
+const Yml = (props) => {
   // cant read add eventlistner of null
 
   const [filepath, setFilepath] = useState("");
@@ -14,10 +14,6 @@ const Yml = () => {
 
   const [modalValid, setModalValid] = useState(false);
   const [modalErrormessage, setModalErrormessage] = useState("");
-
-  const dispatch = useDispatch();
-  const composeymlFiles = (data) => dispatch(actions.composeymlFiles(data));
-  const networkList = useSelector((state) => state.lists.networkList);
 
   useEffect(() => {
     let holder = document.getElementById("drag-file");
@@ -83,14 +79,12 @@ const Yml = () => {
    * }]
    */
   const NetworkDisplay = () => {
-    if (networkList.length) {
-      console.log("this is the network", networkList);
-      setload(true);
+    if (props.networkList.length) {
       let newArray = [];
       //First iteration of network List
       console.log("I am ehre");
-      for (let i = 0; i < networkList.length; i++) {
-        let keys = Object.keys(networkList[i]); // save keys in this format ["parentName"]
+      for (let i = 0; i < props.networkList.length; i++) {
+        let keys = Object.keys(props.networkList[i]); // save keys in this format ["parentName"]
         let parent = keys[0];
         newArray.push(
           <div className="yml-boxes box-shadow" key={`yml-boxes${i}`}>
@@ -98,7 +92,7 @@ const Yml = () => {
               <p>Network: {parent}</p>
             </div>
             <NetworkChildrenList
-              networkList={networkList[i]}
+              networkList={props.networkList[i]}
               parent={keys[0]}
             />
           </div>
